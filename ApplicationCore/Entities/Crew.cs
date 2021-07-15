@@ -8,22 +8,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApplicationCore.Entities
 {
-    [Table("Genre")]
-   public class Genre
+    //[Table("Crew")]
+    public class Crew
     {
-        
         public int Id { get; set; }
-
-        [MaxLength(64)]
-        
         public string Name { get; set; }
+        public string TmdbUrl { get; set; }
+        public string Gender { get; set; }
+        public string ProfilePath { get; set; }
 
-        //navigation for Movie
-        public ICollection<Movie> Movies { get; set; }
+        //navigation with MovieCrew
+        public ICollection<MovieCrew> MovieCrews { get; set; }
     }
-
-    // To change entity/table 2 options, DataAnnotations, Fluent API
-
-
-    
 }

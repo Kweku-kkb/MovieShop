@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    [Migration("20210713165608_CreatingTrailerTable")]
-    partial class CreatingTrailerTable
+    [Migration("20210715110544_CreatingCrew_MovieCrewTable")]
+    partial class CreatingCrew_MovieCrewTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,34 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ApplicationCore.Entities.Crew", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Gender")
+                        .HasMaxLength(4096)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProfilePath")
+                        .HasMaxLength(2084)
+                        .HasColumnType("nvarchar(2084)");
+
+                    b.Property<string>("TmdbUrl")
+                        .HasMaxLength(4096)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Crew");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -29,8 +57,8 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasMaxLength(24)
-                        .HasColumnType("nvarchar(24)");
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.HasKey("Id");
 
@@ -117,6 +145,29 @@ namespace Infrastructure.Migrations
                     b.ToTable("Movie");
                 });
 
+            modelBuilder.Entity("ApplicationCore.Entities.MovieCrew", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CrewId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Department")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Job")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("MovieId", "CrewId", "Department", "Job");
+
+                    b.HasIndex("CrewId");
+
+                    b.ToTable("MovieCrew");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
                 {
                     b.Property<int>("Id")
@@ -142,6 +193,40 @@ namespace Infrastructure.Migrations
                     b.ToTable("Trailer");
                 });
 
+            modelBuilder.Entity("MovieGenre", b =>
+                {
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenreId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieGenre");
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.MovieCrew", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Crew", "Crew")
+                        .WithMany("MovieCrews")
+                        .HasForeignKey("CrewId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
+                        .WithMany("MovieCrews")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Crew");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
                 {
                     b.HasOne("ApplicationCore.Entities.Movie", "Movie")
@@ -153,8 +238,30 @@ namespace Infrastructure.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("MovieGenre", b =>
+                {
+                    b.HasOne("ApplicationCore.Entities.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApplicationCore.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ApplicationCore.Entities.Crew", b =>
+                {
+                    b.Navigation("MovieCrews");
+                });
+
             modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
                 {
+                    b.Navigation("MovieCrews");
+
                     b.Navigation("Trailers");
                 });
 #pragma warning restore 612, 618

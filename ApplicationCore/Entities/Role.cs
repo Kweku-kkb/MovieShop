@@ -5,25 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Entities
 {
-    [Table("Genre")]
-   public class Genre
+    [Table("Role")]
+    public class Role
     {
-        
+        [Key]
         public int Id { get; set; }
-
-        [MaxLength(64)]
-        
+        [MaxLength(20)]
         public string Name { get; set; }
 
-        //navigation for Movie
-        public ICollection<Movie> Movies { get; set; }
+        //navigation for User
+        public ICollection<User> Users { get; set; }
     }
-
-    // To change entity/table 2 options, DataAnnotations, Fluent API
-
-
-    
 }
