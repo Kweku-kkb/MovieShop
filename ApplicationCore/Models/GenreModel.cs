@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationCore.RepositoryInterfaces
+namespace ApplicationCore.Models
 {
-    public interface IUserRepository
+    class GenreModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
