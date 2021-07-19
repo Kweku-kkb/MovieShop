@@ -7,6 +7,16 @@
   <ItemGroup>
     <Compile Remove="Entities\MovieGenre.cs" />
     <Compile Remove="Entities\UserRole.cs" />
+    <Compile Remove="Models\CastModel.cs" />
+    <Compile Remove="Models\CrewModel.cs" />
+    <Compile Remove="Models\FavoriteModel.cs" />
+    <Compile Remove="Models\MovieCastModel.cs" />
+    <Compile Remove="Models\MovieCrewModel.cs" />
+    <Compile Remove="Models\PurchaseModel.cs" />
+    <Compile Remove="Models\ReviewModel.cs" />
+    <Compile Remove="Models\RoleModel.cs" />
+    <Compile Remove="Models\TrailerModel.cs" />
+    <Compile Remove="Models\UserModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

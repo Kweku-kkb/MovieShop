@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +19,7 @@ namespace ApplicationCore.RepositoryInterfaces
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
+        Task<bool> GetExistAsync(Expression<Func<T, bool>> filter = null);
         Task<int> GetCountAsync(Expression<Func<T, bool>> filter = null);
     }
 }

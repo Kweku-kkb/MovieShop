@@ -1,0 +1,13 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model ApplicationCore.Models.MovieCardResponseModel
+<div class="card mb-4 shadow bg-light">
+     <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+         <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />
+     </a>
+</div>
+
+   

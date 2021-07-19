@@ -1,74 +1,4 @@
-﻿
-/*
-using ApplicationCore.ServiceInterfaces;
-using System;
-using ApplicationCore.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure.Services
-{
-    public class MovieService : IMovieService
-    {
-        public List<MovieCardResponseModel> GetTopRevenueMovies()
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
-*/
-/*
-using System;
-using System.Collections.Generic;
-using ApplicationCore.Models;
-using ApplicationCore.ServiceInterfaces;
-
-namespace Infrastructure.Services
-{
-    public class MovieService : IMovieService
-    {
-        public List<MovieCardResponseModel> GetTopRevenueMovies()
-        {
-            var movies = new List<MovieCardResponseModel> {
-
-                          new MovieCardResponseModel {Id = 1, Title = "Avengers: Infinity War", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 2, Title = "Avatar", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 3, Title = "Star Wars: The Force Awakens", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 4, Title = "Titanic", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 5, Title = "Inception", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 6, Title = "Avengers: Age of Ultron", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 7, Title = "Interstellar", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 8, Title = "Fight Club", Budget = 1200000},
-            };
-
-            return movies;
-        }
-
-    }
-
-
-    public class MovieService2 : IMovieService
-    {
-        public List<MovieCardResponseModel> GetTopRevenueMovies()
-        {
-            var movies = new List<MovieCardResponseModel> {
-
-                          new MovieCardResponseModel {Id = 1, Title = "Avengers: Infinity War", Budget = 1200000},
-                          new MovieCardResponseModel {Id = 2, Title = "Avatar", Budget = 1200000},
-
-                          new MovieCardResponseModel {Id = 8, Title = "Fight Club", Budget = 1200000},
-            };
-
-            return movies;
-        }
-    }
-
-
-}*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
@@ -100,13 +30,54 @@ namespace Infrastructure.Services
                     PosterUrl = movie.PosterUrl
                 });
             }
-
             return movieCards;
         }
+
+        public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
+        {
+            var movie = await _movieRepository.GetByIdAsync(id);
+
+            var movieDetails = new MovieDetailsResponseModel()
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                Rating = movie.Rating,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget.GetValueOrDefault(),
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
+                Revenue = movie.Revenue
+            };
+
+            movieDetails.Casts = new List<CastResponseModel>();
+            foreach (var cast in movie.MovieCasts)
+            {
+                movieDetails.Casts.Add(new CastResponseModel
+                {
+                    Id = cast.CastId,
+                    Name = cast.Cast.Name,
+                    Character = cast.Character,
+                    ProfilePath = cast.Cast.ProfilePath,
+                    TmdbUrl = cast.Cast.TmdbUrl
+                });
+            }
+            
+            movieDetails.Genres = new List<GenreModel>();
+            foreach (var genre in movie.Genres)
+            {
+                movieDetails.Genres.Add(new GenreModel
+                {
+                    Id = genre.Id,
+                    Name = genre.Name
+                });
+            }
+            return movieDetails;   
+        }
     }
-
-
-
-
-
 }

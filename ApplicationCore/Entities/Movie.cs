@@ -30,25 +30,19 @@ namespace ApplicationCore.Entities
         public decimal? Rating { get; set; }
 
 
-        //navigation for MovieGenre
+        //navigation
         public ICollection<Genre> Genres { get; set; }
         
-        // Navigation for Trailer
         public ICollection<Trailer> Trailers { get; set; }
-        
-        //navigation for Movie
+       
         public ICollection<MovieCrew> MovieCrews { get; set; }
        
-        //navigation for movieCast
         public ICollection<MovieCast> MovieCasts { get; set; }
 
-        //navigation for movieCast
         public ICollection<Review> Reviews { get; set; }
 
-        //navigation for Favorite
         public ICollection<Favorite> Favorites { get; set; }
         
-        //navigation for Purchase
         public ICollection<Purchase> Purchases { get; set; }
        
     }

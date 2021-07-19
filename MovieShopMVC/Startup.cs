@@ -99,6 +99,10 @@ namespace MovieShopMVC
             services.AddControllersWithViews();
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<ICastService, CastService>();
+            services.AddScoped<ICastRepository, CastRepository>();
+            services.AddScoped<IGenreService, GenreService>();
 
             // services.AddScoped<IMovieService, MovieService2>();
             // 3rdy party IOC Autofac, Ninject

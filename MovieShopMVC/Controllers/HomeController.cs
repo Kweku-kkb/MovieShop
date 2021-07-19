@@ -1,44 +1,4 @@
-﻿/*
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MovieShopMVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MovieShopMVC.Controllers
-{
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
-}*/
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -53,7 +13,7 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        // Each and every rwqeust in MVC controller
+        // Each and every reqeust in MVC controller
         // localhost/home/index
 
         // 1. *** Contsructor Injection 99.99% **
@@ -75,22 +35,30 @@ namespace MovieShopMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // var x = fnlsdfmlksd
-            // var y = sdklfds;lfm
+            /*
+          // var x = fnlsdfmlksd
+          // var y = sdklfds;lfm
+          // 1 ms, 20 ms, 10 seconds
+
+
+          var myType = movies.GetType();
+
+          // 3 ways to send the data from Controller/action to View
+          // 1.*** Models (strongly typed models)
+          // 2. ViewBag
+          // 3. ViewData
+
+          ViewBag.MoviesCount = movies.Count(); */
+
 
             var movies = await _movieService.GetTopRevenueMovies();
-            // 1 ms, 20 ms, 10 seconds
-
-            var myType = movies.GetType();
-
-            // 3 ways to send the data from Controller/action to View
-            // 1.*** Models (strongly typed models)
-            // 2. ViewBag
-            // 3. ViewData
-
-            ViewBag.MoviesCount = movies.Count();
-
             return View(movies);
+        }
+
+        [HttpGet]
+        public IActionResult GetHighestGrossingMovies()
+        {
+            return View();
         }
 
 
