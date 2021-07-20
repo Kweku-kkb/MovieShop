@@ -21,5 +21,9 @@ namespace MovieShopMVC.Controllers
             var movie = await _movieService.GetMovieDetails(id);
             return View(movie);
         }
+        public IActionResult Genre()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

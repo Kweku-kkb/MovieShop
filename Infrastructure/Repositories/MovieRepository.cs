@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
                 throw new Exception($"No movie found with {id} ");
             }
 
-            var movieRating = await _dbContext.Reviews.Where(m => m.MovieId == id).AverageAsync(m => m.Rating == null ? 0 : m.Rating);
+            var movieRating = await _dbContext.Reviews.Where(m => m.MovieId == id).AverageAsync(r => r == null ? 0 : r.Rating);
 
             if (movieRating > 0)
             {

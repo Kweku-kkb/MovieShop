@@ -102,12 +102,18 @@ namespace MovieShopMVC
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
             services.AddScoped<ICastService, CastService>();
             services.AddScoped<ICastRepository, CastRepository>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
+            services.AddScoped<ICurrentUser, CurrentUser>();
+            
+
+
+            services.AddHttpContextAccessor();
+
             // services.AddScoped<IMovieService, MovieService2>();
             // 3rdy party IOC Autofac, Ninject
             // ASP.NET Core has buil;tin support for DI and it has built-in container
