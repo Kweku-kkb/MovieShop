@@ -13,7 +13,7 @@ namespace MovieShopAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public AccountController(IUserService userService)
         {

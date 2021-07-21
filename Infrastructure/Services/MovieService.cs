@@ -9,10 +9,30 @@ namespace Infrastructure.Services
 {
     public class MovieService : IMovieService
     {
+        private readonly IReviewRepository _reviewRepository;
         private readonly IMovieRepository _movieRepository;
-        public MovieService(IMovieRepository movieRepository)
+        public MovieService(IMovieRepository movieRepository, IReviewRepository reviewRepository)
         {
             _movieRepository = movieRepository;
+            _reviewRepository = reviewRepository;
+        }
+
+        public async Task<List<ReviewModel>> GetMovieReviews(int movieId)
+        {
+            var dbReviews = await _reviewRepository.ListAsync(r => r.MovieId == movieId);
+            var reviews = new List<ReviewModel>();
+            foreach (var review in dbReviews)
+            {
+                reviews.Add(new ReviewModel
+                {
+                    MovieId = review.MovieId,
+                    UserId = review.UserId,
+                    Rating = review.Rating,
+                    ReviewText = review.ReviewText,
+                });
+            }
+            return reviews;
+
         }
 
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
@@ -31,11 +51,6 @@ namespace Infrastructure.Services
                 });
             }
             return movieCards;
-        }
-
-        public Task<List<MovieCardResponseModel>> GetTopRatedMovies()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
@@ -84,5 +99,10 @@ namespace Infrastructure.Services
             }
             return movieDetails;   
         }
+
+        //public Task<List<MovieCardResponseModel>> GetMovieReviews()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

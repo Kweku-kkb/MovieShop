@@ -13,10 +13,12 @@ namespace MovieShopAPI.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly IGenreService _genreService;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, IGenreService genreService)
         {
             _movieService = movieService;
+            _genreService = genreService;
         }
 
         // attribute based routing
@@ -35,13 +37,13 @@ namespace MovieShopAPI.Controllers
 
         }
 
-        //[HttpGet]
-        //[Route("toprated")]
-        //public async Task<IActionResult> GetTopRatedMovies()
-        //{
-
-        //}
-
+        [HttpGet]
+        [Route("genre/{genreId:int}")]
+        public async Task<IActionResult> GetMoviesByGenre(int genreId)
+        {
+            var genreDetail = await _genreService.GetGenreDetails(genreId);
+            return Ok(genreDetail.Movies);
+        }
 
         [HttpGet]
         [Route("{id:int}")]
@@ -58,15 +60,10 @@ namespace MovieShopAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}/reviews")]
-        public async Task<IActionResult> GetReviews(int id)
+        public async Task<IActionResult> GetMovieReviews(int id)
         {
-            var movie = await _movieService.GetMovieDetails(id);
-
-            if (movie == null)
-            {
-                return NotFound($"No Movie Found for that {id}");
-            }
-            return Ok(movie);
+            var reviews = await _movieService.GetMovieReviews(id);
+            return Ok(reviews);
         }
 
 

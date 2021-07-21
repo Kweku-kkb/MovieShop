@@ -102,14 +102,16 @@ namespace MovieShopMVC
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
             services.AddScoped<ICastService, CastService>();
-            services.AddScoped<ICastRepository, CastRepository>();
-            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<ICastRepository, CastRepository>();           
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
-            
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+
 
 
             services.AddHttpContextAccessor();

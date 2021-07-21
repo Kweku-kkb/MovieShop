@@ -18,5 +18,13 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
+
+        public async Task<Movie> GetPurchasedMovieById(int movieId, int userId)
+        {
+            var purchase = await _dbContext.Purchases
+                .Include(m => m.Movie)
+                .FirstOrDefaultAsync(p => p.MovieId == movieId && p.UserId == userId);
+            return purchase == null ? null : purchase.Movie;
+        }
     }
 }

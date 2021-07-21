@@ -36,10 +36,6 @@ namespace MovieShopAPI
 
             services.AddControllers();
             services.AddControllersWithViews();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieShopAPI", Version = "v1" });
-            });
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
@@ -50,16 +46,23 @@ namespace MovieShopAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICurrentUser, CurrentUser>();
-
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
 
 
             services.AddHttpContextAccessor();
-
 
             services.AddDbContext<MovieShopDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"));
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieShopAPI", Version = "v1" });
+            });
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

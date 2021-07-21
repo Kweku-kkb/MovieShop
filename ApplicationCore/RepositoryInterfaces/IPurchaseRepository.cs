@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.RepositoryInterfaces
 {
-    public interface IUserRepository:IAsyncRepository<User>
+    public interface IPurchaseRepository : IAsyncRepository<Purchase>
     {
-        Task<Movie> GetPurchasedMovieById(int movieId, int userId);
-        Task<User> GetUserByEmail(string email);
+        public bool FindPurchaseByUserMovie(int userId, int movieId);
     }
 }

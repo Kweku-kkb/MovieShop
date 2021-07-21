@@ -48,6 +48,7 @@ namespace MovieShopMVC.Controllers
         {
             _genreService = genreService;
         }
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var genre = await _genreService.GetGenreDetails(id);
