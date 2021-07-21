@@ -33,6 +33,11 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
+        public Task<List<MovieCardResponseModel>> GetTopRatedMovies()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
         {
             var movie = await _movieRepository.GetByIdAsync(id);
