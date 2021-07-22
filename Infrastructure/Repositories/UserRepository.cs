@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.RepositoryInterfaces;
@@ -25,6 +27,31 @@ namespace Infrastructure.Repositories
                 .Include(m => m.Movie)
                 .FirstOrDefaultAsync(p => p.MovieId == movieId && p.UserId == userId);
             return purchase == null ? null : purchase.Movie;
+        }
+
+        public async Task<IEnumerable<Movie>> GetUserFavoriteMovies(int userId)
+        {
+            var movies = await _dbContext
+              .Favorites.Include(f => f.Movie)
+              .Where(f => f.UserId == userId).Select(f => f.Movie).ToListAsync();
+            return movies;
+        }
+
+        public async Task<IEnumerable<Review>> GetUserReviews(int userId)
+        {
+            var reviews = await _dbContext
+               .Reviews.Include(m => m.Movie)
+               .Where(r => r.UserId == userId)
+               .ToListAsync();
+            return reviews;
+        }
+
+        public async Task<IEnumerable<Movie>> GetUserPurchases(int userId)
+        {
+            var movies = await _dbContext
+                .Purchases.Include(p => p.Movie)
+                .Where(p => p.UserId == userId).Select(p => p.Movie).ToListAsync();
+            return movies;
         }
     }
 }

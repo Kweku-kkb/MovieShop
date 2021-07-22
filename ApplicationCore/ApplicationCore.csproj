@@ -9,7 +9,6 @@
     <Compile Remove="Entities\UserRole.cs" />
     <Compile Remove="Models\CastModel.cs" />
     <Compile Remove="Models\CrewModel.cs" />
-    <Compile Remove="Models\FavoriteModel.cs" />
     <Compile Remove="Models\MovieCastModel.cs" />
     <Compile Remove="Models\MovieCrewModel.cs" />
     <Compile Remove="Models\PurchaseModel.cs" />

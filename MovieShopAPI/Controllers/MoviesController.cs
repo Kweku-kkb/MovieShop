@@ -23,6 +23,19 @@ namespace MovieShopAPI.Controllers
 
         // attribute based routing
         [HttpGet]
+        [Route("toprated")]
+        public async Task<IActionResult> GetTopRatedMovies()
+        {
+
+            var movies = await _movieService.GetTopRatedMovies();
+            if (!movies.Any())
+            {
+                return NotFound("No movies found");
+            }
+            return Ok(movies);
+        }
+
+        [HttpGet]
         [Route("toprevenue")]
         public async Task<IActionResult> GetTopRevenueMovies()
         {
@@ -65,7 +78,5 @@ namespace MovieShopAPI.Controllers
             var reviews = await _movieService.GetMovieReviews(id);
             return Ok(reviews);
         }
-
-
     }
 }

@@ -100,9 +100,23 @@ namespace Infrastructure.Services
             return movieDetails;   
         }
 
-        //public Task<List<MovieCardResponseModel>> GetMovieReviews()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<List<MovieCardResponseModel>> GetTopRatedMovies()
+        {
+            var dbMovies = await _movieRepository.GetTopRatedMovies();
+
+            var movies = new List<MovieCardResponseModel>();
+            foreach (var movie in dbMovies)
+            {
+                movies.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Budget = movie.Budget.GetValueOrDefault(),
+                    PosterUrl = movie.PosterUrl,
+                    Title = movie.Title,
+                    Rating = movie.Rating,
+                });
+            }
+            return movies;
+        }
     }
 }

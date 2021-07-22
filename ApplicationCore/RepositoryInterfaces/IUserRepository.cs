@@ -9,7 +9,10 @@ namespace ApplicationCore.RepositoryInterfaces
 {
     public interface IUserRepository:IAsyncRepository<User>
     {
+        Task<IEnumerable<Review>> GetUserReviews(int userId);
+        Task<IEnumerable<Movie>> GetUserFavoriteMovies(int userId);
         Task<Movie> GetPurchasedMovieById(int movieId, int userId);
         Task<User> GetUserByEmail(string email);
+        Task<IEnumerable<Movie>> GetUserPurchases(int userId);
     }
 }
