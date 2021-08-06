@@ -135,7 +135,7 @@ namespace MovieShopMVC
 
                     options.Cookie.Name = "MovieShopAuth";
                     options.ExpireTimeSpan = TimeSpan.FromHours(2);
-                    options.LoginPath = "/Account/Login";
+                    options.LoginPath = "/Account/Login"; //where the website is redirected when the cookie expires
                 });
         }
 

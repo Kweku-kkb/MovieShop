@@ -31,13 +31,13 @@ namespace ApplicationCore.Entities
 
 
         //navigation
-        public ICollection<Genre> Genres { get; set; }
+        public ICollection<Genre> Genres { get; set; } //this
         
         public ICollection<Trailer> Trailers { get; set; }
        
         public ICollection<MovieCrew> MovieCrews { get; set; }
        
-        public ICollection<MovieCast> MovieCasts { get; set; }
+        public ICollection<MovieCast> MovieCasts { get; set; } //this
 
         public ICollection<Review> Reviews { get; set; }
 

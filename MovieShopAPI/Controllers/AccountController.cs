@@ -59,5 +59,15 @@ namespace MovieShopAPI.Controllers
             return Ok(user);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsers();
+            if (users == null)
+            {
+                return NotFound($"No users found");
+            }
+            return Ok(users);
+        }
     }
 }

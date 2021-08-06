@@ -118,5 +118,23 @@ namespace Infrastructure.Services
             }
             return movies;
         }
+
+        public async Task<List<MovieCardResponseModel>> GetAllMovies()
+        {
+            var movies = await _movieRepository.ListAllAsync();
+            var movieList = new List<MovieCardResponseModel>();
+            foreach (var movie in movies)
+            {
+                movieList.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    PosterUrl = movie.PosterUrl,
+                    Budget =(decimal) movie.Budget,
+                    Rating = movie.Rating
+                });
+            }
+            return movieList;
+        }
     }
 }

@@ -244,5 +244,23 @@ namespace Infrastructure.Services
             }
             return movies;
         }
+
+        public async Task<IEnumerable<UserResponseModel>> GetAllUsers()
+        {
+            var users = await _userRepository.ListAllAsync();
+            var userList = new List<UserResponseModel>();
+            foreach (var user in users)
+            {
+                userList.Add(new UserResponseModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    DateOfBirth = user.DateOfBirth
+                });
+            }
+            return userList;
+        }
     }
 }
