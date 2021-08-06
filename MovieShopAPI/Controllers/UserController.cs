@@ -1,6 +1,8 @@
 ﻿
+using ApplicationCore.Models;
 using ApplicationCore.ServiceInterfaces;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,11 +18,32 @@ namespace MovieShopAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly ICurrentUser _currentUser;
+        private readonly IReviewService _reviewService;
+        private readonly IFavoriteService _favoriteService;
 
-        public UserController(IUserService userService, ICurrentUser currenUser)
+        public UserController(IUserService userService, ICurrentUser currenUser, 
+            IReviewService reviewService, IFavoriteService favoriteService)
         {
             _userService = userService;
             _currentUser = currenUser;
+            _reviewService = reviewService;
+            _favoriteService = favoriteService;
+        }
+
+        [HttpPost]
+        [Route("review")]
+        public async Task<IActionResult> PostReview([FromBody] ReviewModel model)
+        {
+            var createdReviews = await _reviewService.PostReview(model);
+            return CreatedAtRoute("GetReviews", new { id = createdReviews.UserId }, createdReviews);
+        }
+
+        [HttpPut]
+        [Route("review")]
+        public async Task<IActionResult> PutReview([FromBody] ReviewModel model)
+        {
+            var review = await _reviewService.PutReview(model);
+            return Ok(review);
         }
 
         [HttpGet]
@@ -56,7 +79,14 @@ namespace MovieShopAPI.Controllers
             var result = await _userService.RemoveFromFavorite(movieId);
             return Ok(result);
         }
-   
+
+        [HttpDelete("{userId:int}/movie/{movieId:int}")]
+        public async Task<ActionResult> DeleteReview(int userId, int movieId)
+        {
+            await _userService.DeleteMovieReview(userId, movieId);
+            return NoContent();
+        }
+
         [HttpGet]
         [Route("{id:int}/favorites")]
         public async Task<IActionResult> GetUserFavorites(int id)
@@ -64,6 +94,7 @@ namespace MovieShopAPI.Controllers
             var movies = await _userService.GetUserFavoriteMovies(id);
             return Ok(movies);
         }
+
         [HttpGet]
         [Route("{id:int}/reviews")]
         public async Task<IActionResult> GetUserReviews(int id)
@@ -72,5 +103,11 @@ namespace MovieShopAPI.Controllers
             return Ok(reviews);
         }
 
+        [HttpGet("{id:int}/movie/{movieId}/favorite")]
+        public async Task<ActionResult> IsFavoriteExists(int id, int movieId)
+        {
+            var favoriteExists = await _userService.FavoriteExists(id, movieId);
+            return Ok(new { isFavorited = favoriteExists });
+        }
     }
 }

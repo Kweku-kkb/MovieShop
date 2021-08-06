@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
@@ -19,14 +20,17 @@ namespace Infrastructure.Services
         private readonly IMovieRepository _movieRespository;
         private readonly IUserRepository _userRepository;
         private readonly IFavoriteRepository _favoriteRepository;
+        private readonly IReviewRepository _reviewRepository;
 
-        public UserService(IFavoriteRepository favoriteRepository, IUserRepository userRepository, ICurrentUser currentUser, IPurchaseRepository purchaseRepository, IMovieRepository movieRepository)
+        public UserService(IFavoriteRepository favoriteRepository, IUserRepository userRepository, ICurrentUser currentUser, 
+            IPurchaseRepository purchaseRepository, IMovieRepository movieRepository, IReviewRepository reviewRepository)
         {
             _favoriteRepository = favoriteRepository;
             _userRepository = userRepository;
             _currentUser = currentUser;
             _purchaseRepository = purchaseRepository;
             _movieRespository = movieRepository;
+            _reviewRepository = reviewRepository;
         }
 
         public async Task<string> AddToFavorite(int movieId)
@@ -261,6 +265,20 @@ namespace Infrastructure.Services
                 });
             }
             return userList;
+        }
+
+        public async Task<bool> FavoriteExists(int id, int movieId)
+        {
+            return await _favoriteRepository.GetExistAsync(f => f.MovieId == movieId &&
+                                                                f.UserId == id);
+        }
+
+        public async Task DeleteMovieReview(int userId, int movieId)
+        {
+            if (_currentUser.UserId != userId)
+                throw new HttpException(HttpStatusCode.Unauthorized, "You are not Authorized to Delete Review");
+            var review = await _reviewRepository.ListAsync(r => r.UserId == userId && r.MovieId == movieId);
+            await _reviewRepository.DeleteAsync(review.First());
         }
     }
 }
