@@ -1,23 +1,48 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <a class="navbar-brand">MovieShop</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Genres
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark">Privacy</a>
-                    </li>
-                </ul>
-            </div>
+        <a class="navbar-brand">MovieShop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Genres
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark">Privacy</a>
+                </li>
+            </ul>
+        </div>
+           <div class="navbar-collapse collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-link" *ngIf="!isAuth">
+                    <a [routerLink] ="['/login']" class="btn btn-primary"> Login </a>
+                </li>
+                <li class="nav-link" *ngIf="!isAuth">
+                    <a [routerLink] ="['/register']" class="btn btn-primary"> Register </a>
+                </li>
+                <li ngbDropdown class="nav-item dropdown text-capitalize" *ngIf="isAuth">
+                    <a ngbDropdownToggle class="nav-link dropdown-toggle" id="dropdown01" data-toggle="dropdown"
+                      style="cursor:pointer;" aria-haspopup="true"
+                      aria-expanded="false">{{ user.given_name + ' '+ user.family_name }}
+                    </a>
+                    <div>
+                        <a [routerLink]="['/']" (click)="logout()">Log Out</a>
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
     </nav>
 </header>
+
+
+
+    

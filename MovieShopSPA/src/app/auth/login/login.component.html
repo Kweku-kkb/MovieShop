@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div *ngIf="invalidLogin" class="alert alert-danger">
+  <!-- If true, display error message -->
+  Invalid Login, please enter correct username and password
+</div>
+<div class="container ">
+  <!-- Angularzing the html form with the ngSubmit directive -->
+  <form (ngSubmit) = "login()">  
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" [(ngModel)]="userLogin.email"/>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="userLogin.password"/>
+    </div>
+    <input type="submit" class="btn btn-primary" value="submit"/>
+  </form>
+</div>

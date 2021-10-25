@@ -29,6 +29,7 @@ namespace ApplicationCore.Models
         public string LastName { get; set; }
 
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Date of Birth cannot be empty")]
         public DateTime DateOfBirth { get; set; }
     }
 }

@@ -15,6 +15,9 @@ namespace Infrastructure.Repositories
         {
         }
 
+
+        //public async Task<List<Movie>> GetHighest30GrossingMovies() //--check this later
+        //public async Task<IEnumerable<Movie>> GetHighest30GrossingMovies()
         public async Task<List<Movie>> GetHighest30GrossingMovies()
         {
             var topMovies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();

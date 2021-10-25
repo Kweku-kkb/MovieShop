@@ -9,6 +9,8 @@ namespace ApplicationCore.RepositoryInterfaces
     {
         Task<IEnumerable<Movie>> GetTopRatedMovies();
         Task<IEnumerable<Review>> GetMovieReviews(int movieId);
+
+        //Task<IEnumerable<Movie>> GetHighest30GrossingMovies(); //original is the one below
         Task<List<Movie>> GetHighest30GrossingMovies();
 
     }

@@ -15,10 +15,11 @@
     <Compile Remove="Models\RoleModel.cs" />
     <Compile Remove="Models\TrailerModel.cs" />
     <Compile Remove="Models\UserModel.cs" />
+    <Compile Remove="ServiceInterfaces\IJwtService.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.10" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 
